@@ -1,9 +1,9 @@
 
 def Start():
     import TurtleDrawer as TD
-    TD.DrawQuad(0, 0, 100, 100, TD.RGB(100, 0, 0), True)
 
-def Update():
+def Update(frame : int):
     import TurtleDrawer as TD
-    TD.teleport(0, 0)
-    pass
+    TD.ClearScreen()
+    TD.DrawQuad(0, 0, frame % 50, frame % 50, TD.RGB(frame % 200, 0, 0,))
+    

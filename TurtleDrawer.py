@@ -27,10 +27,15 @@ def DrawQuad(x1, y1, x2, y2, color, fill:bool = False):
     if fill == True:
         t.end_fill()
 
+def ClearScreen():
+    t.clear()
+
 Start()
 
+frame = 0
 while True:
-    Update()
+    Update(frame)
+    frame += 1
     wn.update() 
 
 wn.mainloop() 
