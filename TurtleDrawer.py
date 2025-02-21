@@ -4,7 +4,6 @@ import turtle
 import datetime
 from main import Start, Update
 from datetime import datetime
-from Tools import *
 import Tools
 t = turtle.Turtle() 
 wn = turtle.Screen()
@@ -16,19 +15,19 @@ def RGB(R, G, B):
 
 def teleport(x1, y1):
     t.penup()
-    t.goto(CanvisToScreenPosition(x1, y1))
+    t.goto(Tools.CanvisToScreenPosition(x1, y1))
 
 
 def DrawQuad(x1, y1, x2, y2, PenColor, FillColor = None, thickness = 1):
-    t.pensize(thickness)
+    t.pensize(Tools.PenToScreenSize(thickness))
     teleport(x1, y1)
     t.begin_fill()
     t.pencolor(PenColor[0], PenColor[1], PenColor[2])
     t.pendown()
-    t.goto(*CanvisToScreenPosition(x2, y1))
-    t.goto(*CanvisToScreenPosition(x2, y2))
-    t.goto(*CanvisToScreenPosition(x1, y2))
-    t.goto(*CanvisToScreenPosition(x1, y1))
+    t.goto(*Tools.CanvisToScreenPosition(x2, y1))
+    t.goto(*Tools.CanvisToScreenPosition(x2, y2))
+    t.goto(*Tools.CanvisToScreenPosition(x1, y2))
+    t.goto(*Tools.CanvisToScreenPosition(x1, y1))
     t.penup()
     if FillColor != None:
         t.fillcolor(FillColor)
