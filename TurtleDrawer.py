@@ -4,31 +4,36 @@ import turtle
 import datetime
 from main import Start, Update
 from datetime import datetime
+from Tools import *
+import Tools
 t = turtle.Turtle() 
 wn = turtle.Screen()
 wn.tracer(0) 
-
+t.hideturtle()
 
 def RGB(R, G, B):
     return R/255, G/255, B/255
 
 def teleport(x1, y1):
     t.penup()
-    t.goto(x1, y1)
+    t.goto(CanvisToScreenPosition(x1, y1))
 
 
-def DrawQuad(x1, y1, x2, y2, color, fill:bool = False):
+def DrawQuad(x1, y1, x2, y2, PenColor, FillColor = None, thickness = 1):
+    t.pensize(thickness)
     teleport(x1, y1)
     t.begin_fill()
-    t.color(color[0], color[1], color[2])
+    t.pencolor(PenColor[0], PenColor[1], PenColor[2])
     t.pendown()
-    t.goto(x1, y2)
-    t.goto(x2, y2)
-    t.goto(x2, y1)
-    t.goto(x1, y1)
+    t.goto(*CanvisToScreenPosition(x2, y1))
+    t.goto(*CanvisToScreenPosition(x2, y2))
+    t.goto(*CanvisToScreenPosition(x1, y2))
+    t.goto(*CanvisToScreenPosition(x1, y1))
     t.penup()
-    if fill == True:
+    if FillColor != None:
+        t.fillcolor(FillColor)
         t.end_fill()
+    t.pensize(1)
 
 frameDelay = 0
 def SetFramerate(FPS):
@@ -43,11 +48,6 @@ def DeltaTime():
 def ClearScreen():
     t.clear()
 
-def CanvisToScreenPosition(x, y):
-    pass
-
-def DefineScreenSize(x, y):
-    pass
 #now_utc = datetime.now().timestamp()
   
 #print(now_utc)
