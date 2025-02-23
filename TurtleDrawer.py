@@ -2,8 +2,9 @@
 # using Turtle Programming 
 import turtle  
 import datetime
-from main import Start, Update
 from datetime import datetime
+import time
+from main import Start, Update
 import Tools
 t = turtle.Turtle() 
 wn = turtle.Screen()
@@ -22,7 +23,12 @@ def DrawQuad(x1, y1, x2, y2, PenColor, FillColor = None, thickness = 1):
     t.pensize(Tools.PenToScreenSize(thickness))
     teleport(x1, y1)
     t.begin_fill()
-    t.pencolor(PenColor[0], PenColor[1], PenColor[2])
+    if PenColor == None and FillColor != None:
+        PenColor = FillColor
+    try:
+        t.pencolor(PenColor[0], PenColor[1], PenColor[2])
+    except:
+        raise "No provided pen color or fill color"
     t.pendown()
     t.goto(*Tools.CanvisToScreenPosition(x2, y1))
     t.goto(*Tools.CanvisToScreenPosition(x2, y2))

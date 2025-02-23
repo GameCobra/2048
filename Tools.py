@@ -30,5 +30,4 @@ def CanvisToScreenPosition(x, y):
         return x, y
 
 def PenToScreenSize(size):
-    print(size / 100 * width)
     return size / 100 * width
