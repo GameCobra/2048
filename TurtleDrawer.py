@@ -40,6 +40,13 @@ def DrawQuad(x1, y1, x2, y2, PenColor, FillColor = None, thickness = 1):
         t.end_fill()
     t.pensize(1)
 
+def WriteText(text, x, y, size, color = "White", align = "center"):
+    teleport(x, y)
+    #print(t.pos())
+    #print(f"{x} + {y}")
+    t.pencolor(color)
+    t.write(text, align=align, font= ("Arial", size, "normal"))
+
 frameDelay = 0
 def SetFramerate(FPS):
     global frameDelay
