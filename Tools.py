@@ -1,3 +1,5 @@
+import math
+
 #x1, y1 is lower left corner
 def MakeGrid(x1, y1, x2, y2, lenthPoints, hightPoints):
         lenth = abs(x1 - x2)
@@ -30,4 +32,4 @@ def CanvisToScreenPosition(x, y):
         return x, y
 
 def PenToScreenSize(size):
-    return size / 100 * width
+    return math.floor(size / 500 * width / 2)

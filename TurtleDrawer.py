@@ -2,6 +2,7 @@
 # using Turtle Programming 
 import turtle  
 import datetime
+from ErrorHandling import *
 from datetime import datetime
 import time
 from main import Start, Update
@@ -40,12 +41,46 @@ def DrawQuad(x1, y1, x2, y2, PenColor, FillColor = None, thickness = 1):
         t.end_fill()
     t.pensize(1)
 
-def WriteText(text, x, y, size, color = "White", align = "center"):
-    teleport(x, y)
+def WriteText(text : str, x : float, y : float, size : float, color = "White", HAlign : str = "center", VAlign : str = "center", font : str = "Arial"): 
+    """Prints what the animals name is and what sound it makes.
+
+        Parameters
+        ----------
+        text : str, required
+            The Text to be writen
+        x : float, required
+            X position of the text
+        y : float, required
+            Y position of the text
+        size : float, required
+            The size in CP of the text
+        color : str or triplet, optional (Defalt: "white")
+            Color of the text
+        HAlighn : str (left, center, right), optional (Defalt: "center")
+            The horazontal alignment of the text
+        VAlign : str (up, center, down), optional (Defalt: "center")
+            The vertical alignment of the text
+        Font : str, optional (Defalt: "Arial")
+            The font of the text
+
+        Raises
+        ------
+        NotImplementedError
+            If no sound is set for the animal or passed in as a
+            parameter.
+        """
+    if VAlign == "up":
+        teleport(x, y)
+    elif VAlign == "center":
+        teleport(x, y - size * 0.75)
+    elif VAlign == "down":
+        teleport(x, y - size * 1.5)
+    else:
+        raise InvalideFunctionArg("VAlign", VAlign, ("up, center, down"))
     #print(t.pos())
     #print(f"{x} + {y}")
     t.pencolor(color)
-    t.write(text, align=align, font= ("Arial", size, "normal"))
+    t.write(text, align=HAlign, font= (font, Tools.PenToScreenSize(size), "normal"))
 
 frameDelay = 0
 def SetFramerate(FPS):

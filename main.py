@@ -13,9 +13,7 @@ def Update(frame : int):
     SquareRadius = 125
     grid = Tools.MakeGrid(-500 + SquareRadius, -500 + SquareRadius, 500 - SquareRadius, 500 - SquareRadius, 4, 4)
     for item in grid:
-        TD.DrawQuad(item[0]- SquareRadius, item[1] - SquareRadius, item[0] + SquareRadius, item[1] + SquareRadius, TD.RGB(155, 135, 117), TD.RGB(189, 172, 151), 2)
+        TD.DrawQuad(item[0]- SquareRadius, item[1] - SquareRadius, item[0] + SquareRadius, item[1] + SquareRadius, TD.RGB(155, 135, 117), TD.RGB(189, 172, 151), 20)
     for item in grid:
-        TD.WriteText("2", item[0], item[1], 30, [0.5, 0.5, 0.5], "left")
-        #TD.teleport(item[0], item[1])
-        #TD.t.write("2", align="center", font=("Arial", 8, "normal"))
-    
+        TD.WriteText("2", item[0], item[1], 65, VAlign="center", color=[1, 1, 1])
+        #TD.WriteText()
