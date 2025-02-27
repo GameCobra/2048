@@ -1,7 +1,7 @@
 import math
 
 #x1, y1 is lower left corner
-def MakeGrid(x1, y1, x2, y2, lenthPoints, hightPoints):
+def MakeGrid(x1, y1, x2, y2, lenthPoints, hightPoints, includePosition = False):
         lenth = abs(x1 - x2)
         hight = abs(y1 - y2)
         lenthDis = lenth/(lenthPoints - 1)
@@ -9,7 +9,11 @@ def MakeGrid(x1, y1, x2, y2, lenthPoints, hightPoints):
         points = []
         for x in range(lenthPoints):
             for y in range(hightPoints):
-                points.append([x1 + x * lenthDis, y1 + y * hightDis])
+                if includePosition == False:
+                    points.append([x1 + x * lenthDis, y1 + y * hightDis])
+                else:
+                    points.append([x1 + x * lenthDis, y1 + y * hightDis, x, y])
+
         return points
 
 width = 0
