@@ -21,9 +21,14 @@ def Update(frame : int):
     SquareRadius = 125
     grid = Tools.MakeGrid(-500 + SquareRadius, -500 + SquareRadius, 500 - SquareRadius, 500 - SquareRadius, 4, 4, True)
     for item in grid:
-        TD.DrawQuad(item[0]- SquareRadius, item[1] - SquareRadius, item[0] + SquareRadius, item[1] + SquareRadius, TD.RGB(155, 135, 117), TD.RGB(189, 172, 151), 20)
-    for item in grid:
-        TD.WriteText(GameGrid[item[2]][item[3]], item[0], item[1], 65, VAlign="center", color=[1, 1, 1])
+        if GameGrid[item[2]][item[3]] == "":
+            TD.DrawQuad(item[0]- SquareRadius, item[1] - SquareRadius, item[0] + SquareRadius, item[1] + SquareRadius, TD.RGB(155 , 135, 117), TD.RGB(189, 172, 151), 20)
+        else:
+            TD.DrawQuad(item[0]- SquareRadius, item[1] - SquareRadius, item[0] + SquareRadius, item[1] + SquareRadius, TD.RGB(155, 135, 117), TD.RGB(241, 174, 114), 20)
+
+        TD.WriteText(GameGrid[item[2]][item[3]], item[0], item[1], 65, VAlign="center",  color=[1, 1, 1])
+    #for item in grid:
+        
         #TD.WriteText()
 
 def GenerateTile():
@@ -39,7 +44,7 @@ def GenerateTile():
 def IsABlank() -> bool:
     for i in range(len(GameGrid)):
         for j in range(len(GameGrid[0])):
-            if GameGrid[i][j] == 0:
+            if GameGrid[i][j] == "":
                 return True
     return False
     
