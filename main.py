@@ -8,10 +8,6 @@ def Start():
     import Tools
     TD.SetFramerate(-1)
     Tools.DefineScreenSize(500, 500)            
-    GenerateTile()
-    GenerateTile()
-    GenerateTile()
-    GenerateTile()
     keyboard.on_press(on_key_press)
 
 
@@ -42,6 +38,20 @@ def GetHorazontalSlice(y):
     strip = []
     for i in range(len(GameGrid)):
         strip.append(GameGrid[i][y])
+    return  MergeStrip(strip)
+
+def MergeStrip(strip : list):
+    for i in range(len(strip)):
+        if strip[i] != "":
+            j = 1
+            for j in range(i + 1):
+                if strip[i - j] == "":
+                    strip[i - j] = strip[i - j + 1]
+                    strip[i - j + 1] = ""
+                else:
+                    if  strip[i - j] == strip[i - j + 1]:
+                            strip[i - j] = strip[i - j + 1] * 2
+                            strip[i - j + 1] = ""
     return strip
 
 def GenerateTile():
