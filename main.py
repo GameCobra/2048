@@ -1,5 +1,6 @@
 import TurtleDrawer
 import random
+import keyboard
 GameGrid = [["", "", "", ""], ["", "", "", ""], ["", "", "", ""], ["", "", "", ""]]
 
 def Start():
@@ -11,7 +12,8 @@ def Start():
     GenerateTile()
     GenerateTile()
     GenerateTile()
-    GenerateTile()
+    keyboard.on_press(on_key_press)
+
 
 
 def Update(frame : int):
@@ -30,6 +32,17 @@ def Update(frame : int):
     #for item in grid:
         
         #TD.WriteText()
+
+def on_key_press(event):
+    GenerateTile()
+    print(f"Key {event.name} pressed")
+    print(GetHorazontalSlice(1))
+
+def GetHorazontalSlice(y):
+    strip = []
+    for i in range(len(GameGrid)):
+        strip.append(GameGrid[i][y])
+    return strip
 
 def GenerateTile():
     global GameGrid
