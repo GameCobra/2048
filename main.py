@@ -1,6 +1,7 @@
 import TurtleDrawer
 import random
 import keyboard
+import math
 GameGrid = [["", "", "", ""], ["", "", "", ""], ["", "", "", ""], ["", "", "", ""]]
 
 def Start():
@@ -30,28 +31,52 @@ def Update(frame : int):
         #TD.WriteText()
 
 def on_key_press(event):
-    GenerateTile()
-    print(f"Key {event.name} pressed")
-    print(GetHorazontalSlice(1))
+    #print(f"Key {event.name} pressed")
+    if event.name == "s":
+        for i in range(len(GameGrid)):
+            GameGrid[i] = MergeStrip(GameGrid[i])
+        GenerateTile()
+    if event.name == "w":
+        for i in range(len(GameGrid)):
+            GameGrid[i] = list(reversed(MergeStrip(list(reversed(GameGrid[i])))))
+        GenerateTile()
+    if event.name == "a":
+        for i in range(len(GameGrid)):
+            SetHorazontalSlice(i, MergeStrip(GetHorazontalSlice(i)))
+        GenerateTile()
+    if event.name == "d":
+        for i in range(len(GameGrid)):
+            SetHorazontalSlice(i, list(reversed(MergeStrip(list(reversed(GetHorazontalSlice(i)))))))
+        GenerateTile()
+    
+        
+
+def SetHorazontalSlice(y, strip):
+    for i in range(len(GameGrid)):
+        GameGrid[i][y] = strip[i]
 
 def GetHorazontalSlice(y):
     strip = []
     for i in range(len(GameGrid)):
         strip.append(GameGrid[i][y])
-    return  MergeStrip(strip)
+    return  strip
 
 def MergeStrip(strip : list):
     for i in range(len(strip)):
         if strip[i] != "":
-            j = 1
-            for j in range(i + 1):
+            for j in range(1, i + 1):
                 if strip[i - j] == "":
                     strip[i - j] = strip[i - j + 1]
                     strip[i - j + 1] = ""
                 else:
-                    if  strip[i - j] == strip[i - j + 1]:
-                            strip[i - j] = strip[i - j + 1] * 2
-                            strip[i - j + 1] = ""
+                    if  strip[i - j] == strip[i - j + 1] and type(strip[i - j]) is int:
+                        strip[i - j] = str(strip[i - j + 1] * 2)
+                        strip[i - j + 1] = ""
+                        break
+    for i in range(len(strip)):
+        if type(strip[i]) is str and strip[i] != "":
+            strip[i]= int(strip[i])
+
     return strip
 
 def GenerateTile():
