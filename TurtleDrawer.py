@@ -40,7 +40,7 @@ def teleport(x1 : float, y1 : float):
         t.goto(Tools.CanvisToScreenPosition(x1, y1))
 
 
-def DrawQuad(x1 : float, y1 : float, x2 : float, y2 : float, PenColor = None, FillColor = None, Thickness : float = 1):
+def DrawQuad(x1 : float, y1 : float, x2 : float, y2 : float, PenColor = None, FillColor = None, Thickness : float = 1, bevel : float = 0):
     """Draws a rectangle at the corasponding position
 
         Parameters

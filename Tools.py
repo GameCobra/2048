@@ -23,9 +23,7 @@ def MakeGrid(x1, y1, x2, y2, lenthPoints, hightPoints, includePosition = False):
 
     Output
     ----------
-    - List of grid cell lists
-    - Sublist Item 1: X position 
-    - Sublist Item 2: Y position
+    list[lenthPoints][2] (X position : float, Y position : float)
     """
     lenth = abs(x1 - x2)
     hight = abs(y1 - y2)
@@ -71,9 +69,7 @@ def CanvisToScreenPosition(x, y):
     
     Output
     ----------
-    - Touple
-    - item1: x position
-    - Item2: y position
+    (x position : float, y position : float)
     """
     global width
     global hight
@@ -95,7 +91,41 @@ def PenToScreenSize(size):
 
     Output
     ----------
-    - Type : Float
-    - Pen size adjusted for screen size
+    pensize : float
     """
     return math.floor(size / 500 * min(width, hight) / 2)
+
+def BezierCurve3p(X1 : float, Y1 : float, X2 : float, Y2 : float, X3 : float, Y3 : float, resolution : int = 100):
+    """Returns a list of bbezier curve points
+
+    Parameters
+    ----------
+    X1 : float, required
+        X position of 1st point
+    Y1 : float, required
+        Y position of 1st point
+    X2 : float, required
+        X position of control point
+    Y2 : float, required
+        Y position of control point
+    X3 : float, required
+        X position of 2nd point
+    Y3 : float, required
+        Y position of 2nd point
+    resolution : int, optional (Defalt: 100)
+        Controls how detailed the curve is
+
+    Output
+    ----------
+    list[resolution + 1][2] (X position : float, Y position : float)
+    """
+    returnList = []
+    for i in range(resolution + 1): 
+        XV1 = X1 /resolution * (resolution - i) + X2/resolution * i
+        YV1 = Y1 /resolution * (resolution - i) + Y2/resolution * i
+        XV2 = X2 /resolution * (resolution - i) + X3/resolution * i
+        YV2 = Y2 /resolution * (resolution - i) + Y3/resolution * i
+        XV3 = XV1 /resolution * (resolution - i) + XV2/resolution * i
+        YV3 = YV1 /resolution * (resolution - i) + YV2/resolution * i
+        returnList.append([XV3, YV3])
+    return returnList
