@@ -40,7 +40,7 @@ def teleport(x1 : float, y1 : float):
         t.goto(Tools.CanvisToScreenPosition(x1, y1))
 
 
-def DrawQuad(x1 : float, y1 : float, x2 : float, y2 : float, PenColor = None, FillColor = None, Thickness : float = 1, bevel : float = 0):
+def DrawQuad(x1 : float, y1 : float, x2 : float, y2 : float, PenColor = None, FillColor = None, Thickness : float = 1, curve : float = 0):
     """Draws a rectangle at the corasponding position
 
         Parameters
@@ -59,22 +59,60 @@ def DrawQuad(x1 : float, y1 : float, x2 : float, y2 : float, PenColor = None, Fi
             Fill color of the quad, if omited the shape will not be filled
         Thickness : float, optional (Defalt: 1)
             The size of the quads boarder
+        curve : float, optional (Defalt: 0)
+            Defines the radius of the curve of the corners
         """
+
+    #adjusts the size of the pen based on canvas size
     t.pensize(Tools.PenToScreenSize(Thickness))
-    teleport(x1, y1)
-    t.begin_fill()
+
+    #Sets starting conditons based on input values
+    if curve == 0:
+        teleport(x1, y1)
+        t.begin_fill()
     if PenColor == None and FillColor != None:
         PenColor = FillColor
     try:
         t.pencolor(PenColor[0], PenColor[1], PenColor[2])
     except:
         raise "No provided pen color or fill color"
-    t.pendown()
-    t.goto(*Tools.CanvisToScreenPosition(x2, y1))
-    t.goto(*Tools.CanvisToScreenPosition(x2, y2))
-    t.goto(*Tools.CanvisToScreenPosition(x1, y2))
-    t.goto(*Tools.CanvisToScreenPosition(x1, y1))
-    t.penup()
+    
+    #Draws Typical quad
+    #? Could be removed, else will work without this
+    if curve == 0:
+        t.pendown()
+        t.goto(*Tools.CanvisToScreenPosition(x2, y1))
+        t.goto(*Tools.CanvisToScreenPosition(x2, y2))
+        t.goto(*Tools.CanvisToScreenPosition(x1, y2))
+        t.goto(*Tools.CanvisToScreenPosition(x1, y1))
+        t.penup()
+    else:
+
+        #Creates a new set of some starting conditions to curve the corners
+        teleport(x2 - curve, y2)
+        t.pendown()
+        t.begin_fill()
+        bez = Tools.BezierCurve3p(x2 - curve, y2, x2, y2 , x2, y2 - curve)
+        for i in bez:
+             t.goto(*Tools.CanvisToScreenPosition(i[0], i[1]))
+
+        bez = Tools.BezierCurve3p(x2, y1 + curve, x2, y1 , x2 - curve, y1)
+        for i in bez:
+             t.goto(*Tools.CanvisToScreenPosition(i[0], i[1]))
+
+        bez = Tools.BezierCurve3p(x1 + curve, y1, x1, y1, x1, y1 + curve)
+        for i in bez:
+             t.goto(*Tools.CanvisToScreenPosition(i[0], i[1]))
+
+        bez = Tools.BezierCurve3p(x1, y2 - curve, x1, y2, x1 + curve, y2)
+        for i in bez:
+             t.goto(*Tools.CanvisToScreenPosition(i[0], i[1]))
+        bez = Tools.BezierCurve3p(x2 - curve, y2, x2, y2 , x2, y2 - curve)
+        t.goto(*Tools.CanvisToScreenPosition(*bez[0]))
+
+        t.penup()
+
+    #Ends the shape and resets changed values and conditions
     if FillColor != None:
         t.fillcolor(FillColor)
         t.end_fill()

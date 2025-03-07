@@ -10,7 +10,7 @@ def Start():
     TD.SetFramerate(-1)
     Tools.DefineScreenSize(500, 500)            
     keyboard.on_press(on_key_press)
-    print(Tools.BezierCurve3p(0,0, 0, 100, 100, 0))
+    #print(Tools.BezierCurve3p(0,0, 0, 100, 100, 0))
 
 
 
