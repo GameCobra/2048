@@ -30,19 +30,21 @@ def Update(frame : int):
     for item in grid:
         TD.DrawQuad(item[0]- SquareRadius, item[1] - SquareRadius, item[0] + SquareRadius, item[1] + SquareRadius, TD.RGB(155 , 135, 117), TD.RGB(189, 172, 151), 20)
     for item in grid:
-        if previousGrid != [] and  GameGrid[item[2]][item[3]] == previousGrid[item[2]][item[3]]:
-            item[0] += 25
-            item[1] += 25
+        #if previousGrid != [] and  GameGrid[item[2]][item[3]] != previousGrid[item[2]][item[3]]:
+        if GameGrid[item[2]][item[3]] != "" and type(GameGrid[item[2]][item[3]]) is str:
+            item[0] += 25 - min((frame - lastActionFrame) * 2.5, 25)
+            item[1] += 25 - min((frame - lastActionFrame) * 2.5, 25)
         if GameGrid[item[2]][item[3]] != "":
-            TD.DrawQuad(item[0]- SquareRadius, item[1] - SquareRadius, item[0] + SquareRadius, item[1] + SquareRadius, TD.RGB(155 , 135, 117), TD.RGB(241, 174, 114), 20)
+            TD.DrawQuad(item[0] - SquareRadius, item[1] - SquareRadius, item[0] + SquareRadius, item[1] + SquareRadius, TD.RGB(155 , 135, 117), TD.RGB(241, 174, 114), 20)
         TD.WriteText(GameGrid[item[2]][item[3]], item[0], item[1], 65, VAlign="center",  color=[1, 1, 1])
     #for item in grid:
         
         #TD.WriteText()
 
 def on_key_press(event):
+    global previousGrid
     previousGrid = copy.deepcopy(GameGrid)
-    print(previousGrid)
+    #print(previousGrid)
     global lastActionFrame
     beforeGrid = copy.deepcopy(GameGrid)
     #print(f"Key {event.name} pressed")
@@ -92,6 +94,9 @@ def GetHorazontalSlice(y):
 
 def MergeStrip(strip : list):
     for i in range(len(strip)):
+        if type(strip[i]) is str and strip[i] != "":
+            strip[i]= int(strip[i])
+    for i in range(len(strip)):
         if strip[i] != "":
             for j in range(1, i + 1):
                 if strip[i - j] == "":
@@ -102,9 +107,7 @@ def MergeStrip(strip : list):
                         strip[i - j] = str(strip[i - j + 1] * 2)
                         strip[i - j + 1] = ""
                         break
-    for i in range(len(strip)):
-        if type(strip[i]) is str and strip[i] != "":
-            strip[i]= int(strip[i])
+    
 
     return strip
 
